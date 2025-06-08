@@ -4,6 +4,9 @@
  */
 package edu.ijse.mvc;
 
+import edu.ijse.mvc.view.Itemview;
+
+
 /**
  *
  * @author osanda
@@ -15,6 +18,8 @@ public class Main {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        
+        new Itemview().setVisible(true);
     }
     
 }

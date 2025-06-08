@@ -1,8 +1,15 @@
+package edu.ijse.mvc.view;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package edu.ijse.mvc.view;
+import edu.ijse.mvc.controller.ItemController;
+import edu.ijse.mvc.dto.Itemdto;
+import javax.swing.JOptionPane;
+
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,11 +19,14 @@ public class Itemview extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Itemview.class.getName());
 
+    private ItemController itemController = new ItemController();
+
     /**
      * Creates new form itemview
      */
     public Itemview() {
         initComponents();
+        loadTable();
     }
 
     /**
@@ -30,18 +40,18 @@ public class Itemview extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        textbox1 = new javax.swing.JTextField();
+        txtCode = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        textbox2 = new javax.swing.JTextField();
+        txtDesc = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        textbox3 = new javax.swing.JTextField();
+        txtPack = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        textbox4 = new javax.swing.JTextField();
+        txtUnitPrice = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        textbox5 = new javax.swing.JTextField();
+        txtQoh = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblItem = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -65,11 +75,11 @@ public class Itemview extends javax.swing.JFrame {
         jLabel1.setText("Manage Item");
         jLabel1.setToolTipText("");
 
-        textbox1.setToolTipText("");
-        textbox1.setName(""); // NOI18N
-        textbox1.addActionListener(new java.awt.event.ActionListener() {
+        txtCode.setToolTipText("");
+        txtCode.setName(""); // NOI18N
+        txtCode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textbox1ActionPerformed(evt);
+                txtCodeActionPerformed(evt);
             }
         });
 
@@ -77,45 +87,45 @@ public class Itemview extends javax.swing.JFrame {
 
         jLabel3.setText("Description");
 
-        textbox2.setToolTipText("");
-        textbox2.setName(""); // NOI18N
-        textbox2.addActionListener(new java.awt.event.ActionListener() {
+        txtDesc.setToolTipText("");
+        txtDesc.setName(""); // NOI18N
+        txtDesc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textbox2ActionPerformed(evt);
+                txtDescActionPerformed(evt);
             }
         });
 
         jLabel4.setText("Package Size");
 
-        textbox3.setToolTipText("");
-        textbox3.setName(""); // NOI18N
-        textbox3.addActionListener(new java.awt.event.ActionListener() {
+        txtPack.setToolTipText("");
+        txtPack.setName(""); // NOI18N
+        txtPack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textbox3ActionPerformed(evt);
+                txtPackActionPerformed(evt);
             }
         });
 
         jLabel5.setText("Unit Price");
 
-        textbox4.setToolTipText("");
-        textbox4.setName(""); // NOI18N
-        textbox4.addActionListener(new java.awt.event.ActionListener() {
+        txtUnitPrice.setToolTipText("");
+        txtUnitPrice.setName(""); // NOI18N
+        txtUnitPrice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textbox4ActionPerformed(evt);
+                txtUnitPriceActionPerformed(evt);
             }
         });
 
         jLabel6.setText("Quantity of Hand");
 
-        textbox5.setToolTipText("");
-        textbox5.setName(""); // NOI18N
-        textbox5.addActionListener(new java.awt.event.ActionListener() {
+        txtQoh.setToolTipText("");
+        txtQoh.setName(""); // NOI18N
+        txtQoh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textbox5ActionPerformed(evt);
+                txtQohActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblItem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -126,9 +136,14 @@ public class Itemview extends javax.swing.JFrame {
                 "Item Code", "Description", "Package SIze", "Unit Price", "QoH"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblItem);
 
         jButton1.setText("Update");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Delete");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -160,11 +175,11 @@ public class Itemview extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(textbox5, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
-                            .addComponent(textbox4)
-                            .addComponent(textbox3)
-                            .addComponent(textbox2)
-                            .addComponent(textbox1))
+                            .addComponent(txtQoh, javax.swing.GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)
+                            .addComponent(txtUnitPrice)
+                            .addComponent(txtPack)
+                            .addComponent(txtDesc)
+                            .addComponent(txtCode))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -195,23 +210,23 @@ public class Itemview extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textbox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtCode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textbox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDesc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textbox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPack, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textbox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textbox5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtQoh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -226,34 +241,40 @@ public class Itemview extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textbox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textbox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textbox1ActionPerformed
+    private void txtCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodeActionPerformed
+ 
+    }//GEN-LAST:event_txtCodeActionPerformed
 
-    private void textbox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textbox2ActionPerformed
+    private void txtDescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textbox2ActionPerformed
+    }//GEN-LAST:event_txtDescActionPerformed
 
-    private void textbox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textbox3ActionPerformed
+    private void txtPackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPackActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textbox3ActionPerformed
+    }//GEN-LAST:event_txtPackActionPerformed
 
-    private void textbox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textbox4ActionPerformed
+    private void txtUnitPriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUnitPriceActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textbox4ActionPerformed
+    }//GEN-LAST:event_txtUnitPriceActionPerformed
 
-    private void textbox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textbox5ActionPerformed
+    private void txtQohActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQohActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textbox5ActionPerformed
+    }//GEN-LAST:event_txtQohActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        deleteItem();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        saveItem();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        updateItem();            // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
@@ -269,11 +290,105 @@ public class Itemview extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField textbox1;
-    private javax.swing.JTextField textbox2;
-    private javax.swing.JTextField textbox3;
-    private javax.swing.JTextField textbox4;
-    private javax.swing.JTextField textbox5;
+    private javax.swing.JTable tblItem;
+    private javax.swing.JTextField txtCode;
+    private javax.swing.JTextField txtDesc;
+    private javax.swing.JTextField txtPack;
+    private javax.swing.JTextField txtQoh;
+    private javax.swing.JTextField txtUnitPrice;
     // End of variables declaration//GEN-END:variables
+
+    public void saveItem(){
+        Itemdto itemDto = new Itemdto(txtCode.getText(), txtDesc.getText(),
+                txtPack.getText(), Double.parseDouble(txtUnitPrice.getText()),
+                Integer.parseInt(txtQoh.getText()));
+        
+        System.out.println(itemDto);
+        try {
+            String resp = itemController.saveItem(itemDto);
+            JOptionPane.showMessageDialog(this, resp);
+            loadTable();
+            clear();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    private void clear(){
+        txtCode.setText("");
+        txtDesc.setText("");
+        txtPack.setText("");
+        txtQoh.setText("");
+        txtUnitPrice.setText("");
+    }
+
+    public void loadTable(){
+        String [] colums = {"Item Code", "Item Description", "Pack Size", "Unit Price", "Qty On Hand"};
+        DefaultTableModel dtm = new DefaultTableModel(colums, 0){
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+            
+        };
+        tblItem.setModel(dtm);
+        
+        try {
+            ArrayList<Itemdto> dtos = itemController.getAllItem();
+            for (Itemdto dto : dtos) {
+                Object[] rowData = {dto.getId(), dto.getDesc(), dto.getPack(), dto.getUnitPrice(), dto.getQoh()};
+                dtm.addRow(rowData);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+
+    private void searchItem() {
+        String itemCode = (String) tblItem.getValueAt(tblItem.getSelectedRow(), 0);
+        
+        try {
+            Itemdto itemDto = itemController.searchItem(itemCode);
+            if(itemDto != null){
+                txtCode.setText(itemDto.getId());
+                txtDesc.setText(itemDto.getDesc());
+                txtPack.setText(itemDto.getPack());
+                txtUnitPrice.setText(Double.toString(itemDto.getUnitPrice()));
+                txtQoh.setText(Integer.toString(itemDto.getQoh()));
+            } else {
+                JOptionPane.showMessageDialog(this, "Item Not Found");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }   
+    }
+    
+    public void updateItem(){
+        Itemdto itemDto = new Itemdto(txtCode.getText(), txtDesc.getText(),
+                txtPack.getText(), Double.parseDouble(txtUnitPrice.getText()),
+                Integer.parseInt(txtQoh.getText()));
+        
+        System.out.println(itemDto);
+        try {
+            String resp = itemController.updateItem(itemDto);
+            JOptionPane.showMessageDialog(this, resp);
+            loadTable();
+            clear();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    public void deleteItem(){
+        try {
+            String resp = itemController.deleteItem(txtCode.getText());
+            JOptionPane.showMessageDialog(this, resp);
+            loadTable();
+            clear();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
 }
+
+    
+
